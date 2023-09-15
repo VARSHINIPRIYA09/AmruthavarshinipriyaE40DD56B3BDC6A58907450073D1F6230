@@ -1,24 +1,43 @@
-#1.1 Implement a recursive function to calculate the factorial of a given number.
+class BankAccount:
+    def __init__(self, account_number, account_holder_name, initial_balance=0.0):
+        self.__account_number = account_number
+        self.__account_holder_name = account_holder_name
+        self.__account_balance = initial_balance
 
-"""
-1! = 1 x 1
-2! = 2x1! --->2x1
-3! = 3 x 2!--->3x2x1
-.
-.
-10!=10x9! --->10x9x8x....x 1
+    def deposit(self, amount):
+        if amount > 0:
+            self.__account_balance += amount
+            print(f"Deposited ${amount}. New balance: ${self.__account_balance}")
+        else:
+            print("Invalid deposit amount. Amount must be greater than zero.")
 
-Formula - n x (n - 1)!
-"""
+    def withdraw(self, amount):
+        if 0 < amount <= self.__account_balance:
+            self.__account_balance -= amount
+            print(f"Withdrew ${amount}. New balance: ${self.__account_balance}")
+        elif amount > self.__account_balance:
+            print("Insufficient funds.")
+        else:
+            print("Invalid withdrawal amount. Amount must be greater than zero.")
+
+    def display_balance(self):
+        print(f"Account balance for {self.__account_holder_name} (Account #{self.__account_number}): ${self.__account_balance}")
 
 
-def fact_rec(n):
-  if n==0 or n==1:
-    return 1
-  else:
-    return n*fact_rec(n-1)
+# Test the BankAccount class
+if __name__ == "__main__":
+    # Create an instance of BankAccount
+    account1 = BankAccount("123456", "John Doe", 1000.0)
 
-number = int(input("Enter a Value :"))
-res = fact_rec(number)
+    # Display the initial balance
+    account1.display_balance()
 
-print("The factorial of {} is {}.".format(number,res))
+    # Deposit money
+    account1.deposit(500.0)
+
+    # Withdraw money
+    account1.withdraw(200.0)
+    account1.withdraw(1500.0)  # Should display "Insufficient funds."
+
+    # Display the updated balance
+    account1.display_balance()
